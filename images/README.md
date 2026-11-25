@@ -1,8 +1,12 @@
 # Velora Beauty — image slots
 
-Drop your photos in this folder using exactly these filenames (JPG). Every slot
-already has the `<img>` wired up; if a file is missing the page falls back to a
-labelled grey placeholder, so it never looks broken.
+All 21 photos are **CC0 (public domain) from StockSnap.io**, pulled via the
+Openverse API and downscaled to ≤1000 px wide (banner: 1600 px). No attribution
+is required, but the source is recorded here for provenance. Total weight: ~1.2 MB.
+
+To swap in your own, keep the filenames below. Every slot already has the `<img>`
+wired up; if a file is missing the page falls back to a labelled grey
+placeholder, so it never looks broken.
 
 | Filename | Used for | Suggested shape |
 |---|---|---|

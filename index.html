@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Velora Beauty — Beauty for every shade</title>
+<meta name="description" content="Velora Beauty — makeup, skincare and more. Beauty for every shade.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Bricolage+Grotesque:wght@400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#111111; --bg:#ffffff; --soft:#F5F5F5; --grey:#D9D9D9;
+  --line:#E4E4E4; --red:#D8112B; --pink:#FF5FA6; --dark:#3B3F44;
+  --font-head:'Unbounded',sans-serif; --font-body:'Bricolage Grotesque',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);color:var(--ink);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.logo{font-family:var(--font-head);font-weight:700;text-transform:uppercase;line-height:1.05}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit}
+::selection{background:var(--pink);color:#fff}
+body{padding-top:180px} /* fallback if JS is off; JS sets it exactly */
+
+/* ---------- Buttons ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 36px;border:1px solid var(--ink);border-radius:2px;background:var(--ink);color:#fff;
+  font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;overflow:hidden;
+  transition:transform .25s ease,color .25s ease}
+.btn::before{content:"";position:absolute;inset:0;background:var(--red);
+  transform:translateY(101%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.btn:hover::before{transform:translateY(0)}
+.btn:hover{transform:translateY(-2px)}
+.btn>*{position:relative;z-index:1}
+.btn.white{background:#fff;color:var(--ink)}
+.btn.white::before{background:var(--ink)}
+.btn.white:hover{color:#fff}
+.btn.sm{padding:12px 20px;font-size:12px;width:100%}
+
+/* ---------- Header ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:100;transition:box-shadow .3s ease;background:#fff}
+header.scrolled{box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.ann1{position:relative;overflow:hidden;background:var(--dark);color:#fff;text-align:center;
+  font-size:12px;letter-spacing:.04em;padding:9px 16px}
+.ann1 .shine{position:absolute;top:0;bottom:0;width:60px;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent);
+  left:-80px;animation:shine 5s linear infinite}
+@keyframes shine{to{left:calc(100% + 80px)}}
+.ann2{display:flex;align-items:center;justify-content:center;gap:18px;background:var(--ink);color:#fff;
+  font-size:12.5px;padding:8px 16px;min-height:38px}
+.ann2 .arr{font-size:15px;padding:2px 8px;opacity:.8;transition:opacity .2s}
+.ann2 .arr:hover{opacity:1}
+.ann2 .msgs{width:min(640px,72vw);height:20px;overflow:hidden;position:relative}
+.ann2 .msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:6px;
+  white-space:nowrap;opacity:0;transform:translateY(100%);transition:transform .5s ease,opacity .5s ease}
+.ann2 .msg.on{opacity:1;transform:translateY(0)}
+.ann2 .msg.out{opacity:0;transform:translateY(-100%)}
+.ann2 .msg a{font-weight:700;text-decoration:underline;text-underline-offset:3px;margin-left:8px}
+.ann2 .msg a:hover{color:var(--pink)}
+.ann2:hover .msg{animation-play-state:paused}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;gap:24px}
+.logo{font-size:19px;letter-spacing:.05em}
+.logo em{font-style:normal;color:var(--red)}
+.links{display:flex;gap:26px;list-style:none}
+.links a{font-size:13px;font-weight:600;position:relative;padding:6px 0;white-space:nowrap}
+.links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--ink);transition:width .3s ease}
+.links a:hover::after{width:100%}
+.links a.red{color:var(--red)}
+.links a.red::after{background:var(--red)}
+.icons{display:flex;align-items:center;gap:20px}
+.icons .ic{width:20px;height:20px;display:inline-flex}
+.icons .ic svg{width:100%;height:100%}
+.hi{font-size:13px;font-weight:600;white-space:nowrap}
+.bag{position:relative}
+.bag .count{position:absolute;top:-7px;right:-9px;background:var(--ink);color:#fff;font-size:10px;font-weight:700;
+  min-width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.bag .count.pop{animation:pop .5s ease}
+@keyframes pop{40%{transform:scale(1.5)}}
+@media(max-width:1080px){.links{display:none}}
+@media(max-width:560px){.hi{display:none}.nav{padding:0 18px}}
+
+/* ---------- Mobile menu ---------- */
+.burger{display:none;width:42px;height:42px;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;border:1px solid var(--ink);border-radius:2px;flex:0 0 auto}
+.burger span{display:block;width:19px;height:2px;background:var(--ink);
+  transition:transform .3s ease,opacity .2s ease}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media(max-width:1080px){.burger{display:flex}}
+@media(max-width:560px){.icons{gap:14px}}
+
+.mmenu{position:fixed;inset:0;z-index:90;background:#fff;overflow-y:auto;
+  padding:calc(var(--hdrH,180px) + 20px) 24px 48px;
+  opacity:0;visibility:hidden;transform:translateY(-10px);
+  transition:opacity .3s ease,transform .3s ease,visibility .3s}
+.mmenu.open{opacity:1;visibility:visible;transform:none}
+.mmenu ul{list-style:none;display:flex;flex-direction:column}
+.mmenu a{display:block;padding:18px 2px;font-family:var(--font-head);font-size:clamp(18px,5vw,24px);
+  text-transform:uppercase;border-bottom:1px solid var(--line)}
+.mmenu a.red{color:var(--red)}
+body.menu-open{overflow:hidden}
+@media(min-width:1081px){.mmenu{display:none}}
+
+/* ---------- Hero: polaroid rail ---------- */
+.hero{background:var(--soft);padding:56px 0 64px;position:relative;overflow:hidden}
+.belt{overflow:hidden;padding:34px 0 46px}
+.belt-track{display:flex;width:max-content;animation:belt 55s linear infinite}
+.belt:hover .belt-track{animation-play-state:paused}
+@keyframes belt{to{transform:translateX(-50%)}}
+.polaroid{flex:0 0 auto;background:#fff;padding:12px 12px 14px;margin:0 -16px;
+  box-shadow:0 12px 30px rgba(0,0,0,.14);transform:rotate(var(--tilt));
+  transition:transform .4s cubic-bezier(.34,1.4,.64,1),filter .4s ease;position:relative;z-index:1;
+  animation:bob var(--bd,5s) ease-in-out var(--bdel,0s) infinite alternate}
+@keyframes bob{from{translate:0 -5px}to{translate:0 6px}}
+.polaroid:hover{transform:rotate(0deg) scale(1.07);z-index:10;filter:grayscale(1)}
+.polaroid .ph{width:230px;aspect-ratio:4/5;background:linear-gradient(150deg,#e2e2e2,var(--grey));
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:14px;color:#777;font-size:12px;line-height:1.4}
+.polaroid figcaption{font-family:'Permanent Marker',cursive;font-size:13px;color:#555;text-align:center;padding-top:10px}
+.xo{position:absolute;left:36px;bottom:26px;font-family:'Permanent Marker',cursive;color:var(--red);
+  font-size:34px;transform:rotate(-10deg);z-index:20;animation:pulse 2.4s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{50%{transform:rotate(-10deg) scale(1.15)}}
+.hero-cta{text-align:center;margin-top:26px}
+
+/* ---------- Placeholder photos ---------- */
+.ph{background:linear-gradient(150deg,#e2e2e2,var(--grey));display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:20px;color:#777;font-size:13px;line-height:1.5;width:100%;height:100%;
+  position:relative;overflow:hidden}
+/* Real photo sits above the placeholder text; if it fails to load it removes itself. */
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+
+/* ---------- Product rails ---------- */
+.shop{padding:84px 0 0}
+.shop.gifts{padding-top:26px}
+.wrap{max-width:1360px;margin:0 auto;padding:0 32px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(24px,3.4vw,40px)}
+.sub{color:#666;margin-top:8px;font-size:15px}
+.arrows{display:flex;gap:10px}
+.round{width:44px;height:44px;border:1px solid var(--ink);border-radius:50%;font-size:17px;
+  display:flex;align-items:center;justify-content:center;transition:background .25s,color .25s,opacity .25s}
+.round:hover:not(:disabled){background:var(--ink);color:#fff}
+.round:disabled{opacity:.3;cursor:default}
+.rail{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
+  margin-top:30px;padding:4px 2px 18px;scroll-behavior:smooth}
+.rail::-webkit-scrollbar{display:none}
+.card{flex:0 0 calc((100% - 54px)/4);scroll-snap-align:start;min-width:0}
+@media(max-width:1080px){.card{flex-basis:calc((100% - 18px)/2)}}
+@media(max-width:640px){.card{flex-basis:74%}}
+.card-img{position:relative;aspect-ratio:1/1;background:var(--grey);overflow:hidden}
+.card-img .ph{transition:transform .5s ease}
+.card:hover .card-img .ph{transform:scale(1.07)}
+.badge{position:absolute;top:12px;left:12px;background:var(--ink);color:#fff;font-size:10px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;z-index:2}
+.heart{position:absolute;top:10px;right:10px;z-index:2;width:34px;height:34px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.heart svg{width:17px;height:17px;fill:none;stroke:var(--ink);stroke-width:2;transition:fill .2s,stroke .2s,transform .2s}
+.heart.liked svg{fill:var(--red);stroke:var(--red);animation:pop .4s ease}
+.card-info{padding:14px 2px 0;display:flex;flex-direction:column;gap:6px}
+.card-info h3{font-size:13.5px;line-height:1.35;text-transform:none;font-family:var(--font-body);font-weight:700}
+.meta{font-size:12px;color:#777}
+.stars{color:var(--red);letter-spacing:2px;font-size:12px}
+.price{font-weight:700;font-size:15px}
+.price s{color:var(--red);font-weight:600;margin-left:8px}
+.add{margin-top:8px}
+.add.added{background:var(--red);border-color:var(--red);color:#fff}
+.add.added::before{display:none}
+
+/* ---------- Features ---------- */
+.feature{display:grid;grid-template-columns:1fr 1fr;min-height:560px;background:var(--soft)}
+.feature.white{background:#fff}
+.feature .f-img{overflow:hidden;min-height:320px}
+.feature .f-text{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  text-align:center;padding:64px clamp(24px,6vw,90px)}
+.f-text h2{font-size:clamp(24px,3vw,38px)}
+.f-text p{color:#555;max-width:420px;font-size:16px;line-height:1.65}
+.feature.white .f-img{padding:40px}
+.feature.white .f-img .ph{box-shadow:0 20px 50px rgba(0,0,0,.12)}
+@media(max-width:860px){.feature{grid-template-columns:1fr;min-height:0}.feature.white .f-text{order:2}}
+
+/* ---------- Banner ---------- */
+.banner{position:relative;height:620px;overflow:hidden;display:flex;align-items:center}
+.banner .bg{position:absolute;inset:0;transform:scale(1.15)}
+.banner.in .bg{animation:zoomout 2.2s cubic-bezier(.2,.6,.2,1) forwards}
+@keyframes zoomout{to{transform:scale(1)}}
+.banner .grad{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.62),rgba(0,0,0,.15) 55%,transparent)}
+.banner .inner{position:relative;z-index:2;color:#fff;padding:0 clamp(24px,8vw,120px);max-width:640px}
+.banner h2{font-size:clamp(30px,4.6vw,58px)}
+.banner p{margin:18px 0 28px;font-size:17px;opacity:.92}
+.banner .btn{border-color:#fff}
+@media(max-width:700px){.banner{height:480px}}
+
+/* ---------- Footer ---------- */
+footer{background:var(--red);color:#fff;padding:80px 0 0;margin-top:0;overflow:hidden}
+.f-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr) 1.6fr;gap:36px}
+@media(max-width:1080px){.f-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.f-grid{grid-template-columns:1fr}}
+.f-grid h4{font-family:var(--font-head);font-size:12px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
+.f-grid ul{list-style:none;display:flex;flex-direction:column;gap:10px;font-size:14px}
+.f-grid a{opacity:.9}
+.f-grid a:hover{text-decoration:underline;text-underline-offset:3px}
+.news h3{font-size:clamp(19px,2vw,26px);margin-bottom:16px}
+.news form{display:flex;flex-direction:column;gap:12px}
+.news input[type=email]{padding:14px 16px;border:1px solid rgba(255,255,255,.5);background:transparent;color:#fff;
+  font-family:inherit;font-size:14px;border-radius:2px}
+.news input::placeholder{color:rgba(255,255,255,.7)}
+.news .btn{background:var(--ink);border-color:var(--ink);align-self:flex-start}
+.news .consent{display:flex;align-items:flex-start;gap:9px;font-size:12px;opacity:.9}
+.news .consent input{margin-top:2px}
+.news .ok{display:none;font-weight:700;margin-top:6px}
+.wordmark{display:flex;justify-content:center;margin-top:70px;user-select:none}
+.wordmark span{font-family:var(--font-head);font-weight:700;font-size:18.5vw;line-height:.9;display:inline-block;
+  transition:color .3s,transform .3s;opacity:0;transform:translateY(60%)}
+.wordmark.in span{opacity:1;transform:translateY(0);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.3,1),color .3s}
+.wordmark.in span:nth-child(1){transition-delay:.00s}.wordmark.in span:nth-child(2){transition-delay:.07s}
+.wordmark.in span:nth-child(3){transition-delay:.14s}.wordmark.in span:nth-child(4){transition-delay:.21s}
+.wordmark.in span:nth-child(5){transition-delay:.28s}.wordmark.in span:nth-child(6){transition-delay:.35s}
+.wordmark.wave span{animation:wave 3.2s ease-in-out infinite}
+.wordmark.wave span:nth-child(2){animation-delay:.12s}.wordmark.wave span:nth-child(3){animation-delay:.24s}
+.wordmark.wave span:nth-child(4){animation-delay:.36s}.wordmark.wave span:nth-child(5){animation-delay:.48s}
+.wordmark.wave span:nth-child(6){animation-delay:.6s}
+@keyframes wave{50%{transform:translateY(-4%)}}
+.wordmark span:hover{color:var(--ink);transform:rotate(-6deg) scale(1.06)}
+.legal{text-align:center;font-size:12.5px;opacity:.9;padding:26px 16px 30px;border-top:1px solid rgba(255,255,255,.25);margin-top:24px}
+
+/* ---------- Custom cursor ---------- */
+.cursor{position:fixed;top:0;left:0;width:16px;height:16px;border-radius:50%;background:#fff;
+  mix-blend-mode:difference;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+  transition:width .25s,height .25s}
+.cursor.big{width:52px;height:52px}
+@media(pointer:coarse){.cursor{display:none}}
+
+/* ---------- Sparkles ---------- */
+.spark{position:fixed;pointer-events:none;z-index:9998;font-size:14px;animation:fly .9s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--tx),var(--ty)) rotate(160deg);opacity:0}}
+
+/* ---------- Reveals (JS only; content visible without JS) ---------- */
+html.js .reveal{opacity:0;transform:translateY(34px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+html.js .reveal.in{opacity:1;transform:translateY(0)}
+html.js .reveal-l{opacity:0;transform:translateX(-50px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.3,1)}
+html.js .reveal-l.in{opacity:1;transform:translateX(0)}
+html.js .reveal-r{opacity:0;transform:translateX(50px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.3,1)}
+html.js .reveal-r.in{opacity:1;transform:translateX(0)}
+html.js .reveal-l.in .ph,html.js .reveal-r.in .ph{animation:wipein 1s cubic-bezier(.2,.7,.3,1)}
+@keyframes wipein{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+html.js .reveal-r.in .ph{animation-name:wipeinr}
+@keyframes wipeinr{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
+
+/* ---------- Reduced motion ---------- */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.15s!important}
+  html{scroll-behavior:auto}
+  .belt-track{animation:none}
+}
+</style>
+</head>
+
+<body>
+<header id="hdr">
+  <div class="ann1"><span class="shine"></span>Free standard shipping in Nigeria on orders over ₦100,000.</div>
+  <div class="ann2">
+    <button class="arr" id="annPrev" aria-label="Previous announcement">&#8592;</button>
+    <div class="msgs" id="annMsgs">
+      <p class="msg on">More savings? Say less. Shop value bundles + sets. <a href="#gifts">SHOP NOW</a><a href="#">TERMS</a></p>
+      <p class="msg">The Holiday Gift Shop is open. Find something for everyone on your list. <a href="#gifts">GET GIFTING</a></p>
+      <p class="msg">New: Velvet Heat Lip Gloss. Turn up the shine. <a href="#products">SHOP NOW</a></p>
+    </div>
+    <button class="arr" id="annNext" aria-label="Next announcement">&#8594;</button>
+  </div>
+  <nav class="nav">
+    <a class="logo" href="#">VEL<em>O</em>RA</a>
+    <ul class="links">
+      <li><a class="red" href="#gifts">The Holiday Gift Shop</a></li>
+      <li><a href="#products">New + Bestsellers</a></li>
+      <li><a href="#">Makeup</a></li>
+      <li><a href="#">Skincare</a></li>
+      <li><a href="#">Body</a></li>
+      <li><a href="#">Hair</a></li>
+      <li><a href="#">Fragrance</a></li>
+      <li><a href="#">Sale</a></li>
+      <li><a href="#">Discover</a></li>
+    </ul>
+    <div class="icons">
+      <a class="ic" href="#" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></a>
+      <span class="hi">Hi, Tega.</span>
+      <a class="ic" href="#" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></a>
+      <a class="ic" href="#" aria-label="Favourites"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-8-5.3-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.7-8 11-8 11z"/></svg></a>
+      <a class="ic bag" href="#" aria-label="Bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l-1 13H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="count" id="bagCount">0</span></a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<nav class="mmenu" id="mobileMenu" aria-label="Mobile">
+  <ul>
+    <li><a class="red" href="#gifts">The Holiday Gift Shop</a></li>
+    <li><a href="#products">New + Bestsellers</a></li>
+    <li><a href="#">Makeup</a></li>
+    <li><a href="#">Skincare</a></li>
+    <li><a href="#">Body</a></li>
+    <li><a href="#">Hair</a></li>
+    <li><a href="#">Fragrance</a></li>
+    <li><a href="#">Sale</a></li>
+    <li><a href="#">Discover</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="belt">
+    <div class="belt-track" id="beltTrack"></div>
+  </div>
+  <div class="xo">xo</div>
+  <div class="hero-cta reveal"><a class="btn" href="#products"><span>Shop now</span></a></div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="shop" id="products">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>Velora's most wanted</h2>
+      <div class="arrows">
+        <button class="round" data-rail="rail1" data-dir="-1" aria-label="Scroll back">&#8592;</button>
+        <button class="round" data-rail="rail1" data-dir="1" aria-label="Scroll forward">&#8594;</button>
+      </div>
+    </div>
+    <div class="rail" id="rail1"></div>
+  </div>
+</section>
+
+<!-- GIFTS -->
+<section class="shop gifts" id="gifts">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2>New + holiday gifts</h2>
+      <div class="arrows">
+        <button class="round" data-rail="rail2" data-dir="-1" aria-label="Scroll back">&#8592;</button>
+        <button class="round" data-rail="rail2" data-dir="1" aria-label="Scroll forward">&#8594;</button>
+      </div>
+    </div>
+    <p class="sub reveal">Fresh drops and sets to gift (or keep).</p>
+    <div class="rail" id="rail2"></div>
+  </div>
+</section>
+
+<!-- FEATURE A -->
+<section class="feature">
+  <div class="f-img reveal-l"><div class="ph"><img src="images/feature-blush.jpg" alt="Model holding a plum cream blush compact to her face" loading="lazy" onerror="this.remove()">PHOTO — Model holding a plum cream blush compact to her face</div></div>
+  <div class="f-text">
+    <h2 class="reveal-r">Shine. Heat. Result.</h2>
+    <p class="reveal-r" style="transition-delay:.12s">Everything for a full lip look, made to work for you. Liner, gloss and a little extra heat, in one easy reach.</p>
+    <a class="btn reveal-r" style="transition-delay:.24s" href="#products"><span>Shop lips</span></a>
+  </div>
+</section>
+
+<!-- FEATURE B -->
+<section class="feature white">
+  <div class="f-text">
+    <h2 class="reveal-l">Velora is about beauty for all</h2>
+    <p class="reveal-l" style="transition-delay:.12s">We make products that do the work for you. No extra steps, no compromises. Every shade is thought through, from the first swatch to the last.</p>
+    <a class="btn reveal-l" style="transition-delay:.24s" href="#"><span>More about us</span></a>
+  </div>
+  <div class="f-img reveal-r"><div class="ph"><img src="images/feature-gloss.jpg" alt="Pink shimmer lip gloss on glossy pink lips, tight crop" loading="lazy" onerror="this.remove()">PHOTO — Pink shimmer lip gloss on glossy pink lips, tight crop</div></div>
+</section>
+
+<!-- BANNER -->
+<section class="banner" id="banner">
+  <div class="bg"><div class="ph" style="aspect-ratio:auto;height:100%"><img src="images/banner-portrait.jpg" alt="Glamorous portrait, sleek ponytail, dark satin top, deep berry gloss, warm brown backdrop" onerror="this.remove()">PHOTO — Glamorous portrait, sleek ponytail, dark satin top, deep berry gloss, warm brown backdrop</div></div>
+  <div class="grad"></div>
+  <div class="inner">
+    <h2 class="reveal-l">Your glow, your rules</h2>
+    <p class="reveal-l" style="transition-delay:.12s">Shades made for every skin tone, from first swipe to last.</p>
+    <a class="btn white reveal-l" style="transition-delay:.24s" href="#products"><span>Shop now</span></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div><a class="logo" href="#" style="font-size:24px">VELORA</a>
+        <p style="margin-top:14px;font-size:13px;opacity:.85;max-width:220px">Beauty for every shade. Made with love in Nigeria.</p></div>
+      <div><h4>Customer Service</h4><ul><li><a href="#">Contact us</a></li><li><a href="#">Shipping &amp; delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Track your order</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#">FAQs</a></li><li><a href="#">Shade finder</a></li><li><a href="#">Store locator</a></li></ul></div>
+      <div><h4>About</h4><ul><li><a href="#">Our story</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div>
+      <div><h4>Follow</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">YouTube</a></li></ul></div>
+      <div class="news">
+        <h3>Down for more? We got you!</h3>
+        <form id="newsForm">
+          <input type="email" id="newsEmail" placeholder="Your email address" required aria-label="Email address">
+          <button class="btn" type="submit"><span>Subscribe</span></button>
+          <label class="consent"><input type="checkbox" required> I agree to receive emails from Velora Beauty and accept the privacy policy.</label>
+          <p class="ok" id="newsOk">You're in. Watch your inbox for the next drop.</p>
+        </form>
+      </div>
+    </div>
+    <div class="wordmark" id="wordmark" aria-hidden="true"><span>V</span><span>E</span><span>L</span><span>O</span><span>R</span><span>A</span></div>
+    <p class="legal">© <span id="year">2026</span> Velora Beauty. All rights reserved. · Nigeria · English</p>
+  </div>
+</footer>
+
+<div class="cursor" id="cursor"></div>
+<script>
+document.documentElement.classList.add('js');
+var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- Header height / shadow ---------- */
+var hdr = document.getElementById('hdr');
+function setPad(){
+  document.body.style.paddingTop = hdr.offsetHeight + 'px';
+  document.documentElement.style.setProperty('--hdrH', hdr.offsetHeight + 'px');
+}
+setPad(); window.addEventListener('resize', setPad);
+window.addEventListener('scroll', function(){
+  hdr.classList.toggle('scrolled', window.scrollY > 140);
+}, {passive:true});
+
+/* ---------- Mobile menu ---------- */
+(function(){
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('mobileMenu');
+  function setMenu(open){
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.classList.toggle('open', open);
+    document.body.classList.toggle('menu-open', open);
+  }
+  burger.addEventListener('click', function(){
+    setMenu(burger.getAttribute('aria-expanded') !== 'true');
+  });
+  menu.addEventListener('click', function(e){ if(e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') setMenu(false); });
+  window.addEventListener('resize', function(){ if(window.innerWidth > 1080) setMenu(false); });
+})();
+
+/* ---------- Announcement rotation ---------- */
+(function(){
+  var msgs = Array.prototype.slice.call(document.querySelectorAll('#annMsgs .msg'));
+  var i = 0, timer;
+  function go(n){
+    msgs[i].classList.remove('on'); msgs[i].classList.add('out');
+    var old = msgs[i];
+    setTimeout(function(){ old.classList.remove('out'); }, 500);
+    i = (n + msgs.length) % msgs.length;
+    msgs[i].classList.add('on');
+  }
+  function start(){ if(!reduceMotion) timer = setInterval(function(){ go(i+1); }, 4500); }
+  function stop(){ clearInterval(timer); }
+  start();
+  var bar = document.querySelector('.ann2');
+  bar.addEventListener('mouseenter', stop);
+  bar.addEventListener('mouseleave', start);
+  document.getElementById('annPrev').addEventListener('click', function(){ stop(); go(i-1); start(); });
+  document.getElementById('annNext').addEventListener('click', function(){ stop(); go(i+1); start(); });
+})();
+
+/* ---------- Polaroid belt ---------- */
+(function(){
+  var photos = [
+    {src:'images/polaroid-1.jpg', alt:'Model in a red hoodie holding a red lip gloss to her cheek'},
+    {src:'images/polaroid-2.jpg', alt:'Glossy rose-pink lips with a gloss tube at the chin'},
+    {src:'images/polaroid-3.jpg', alt:'Ombré dark-red glossy lips with a gloss tube under the chin'},
+    {src:'images/polaroid-4.jpg', alt:'Model in a dark satin top with deep berry lips'},
+    {src:'images/polaroid-5.jpg', alt:'Matte cherry-red lips biting a chrome lipstick tube'},
+    {src:'images/polaroid-6.jpg', alt:'Model holding a plum cream blush compact'},
+    {src:'images/polaroid-7.jpg', alt:'Model in a red hoodie holding a gloss beside her face'},
+    {src:'images/polaroid-8.jpg', alt:'Bubblegum-pink shimmer gloss on full lips'},
+    {src:'images/polaroid-9.jpg', alt:'Model applying a cream blush stick on a bright purple background'}
+  ];
+  var tilts = [-6,-3,4,-5,2,-4,5,-2,3];
+  function fig(t, cap){
+    var p = photos[t];
+    return '<figure class="polaroid" style="--tilt:'+tilts[t]+'deg;--bd:'+(4.2+Math.random()*2.2).toFixed(1)+
+      's;--bdel:'+(-Math.random()*4).toFixed(1)+'s"><div class="ph"><img src="'+p.src+'" alt="'+p.alt+
+      '" loading="lazy" onerror="this.remove()">'+p.alt+'</div><figcaption>'+cap+'</figcaption></figure>';
+  }
+  var caps = ['heat','gloss','ombre','berry','chrome','plum','xo','bubble','blush'];
+  var half = '';
+  for(var k=0;k<2;k++){ for(var t=0;t<9;t++){ half += fig(t, caps[t]); } }
+  document.getElementById('beltTrack').innerHTML = half + half; /* two copies = seamless 50% loop */
+})();
+
+/* ---------- Product rails ---------- */
+var heartSVG = '<svg viewBox="0 0 24 24"><path d="M12 21s-8-5.3-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.7-8 11-8 11z"/></svg>';
+function card(p){
+  var price = p.was ? '<span class="price">'+p.price+'<s>'+p.was+'</s></span>' : '<span class="price">'+p.price+'</span>';
+  return '<article class="card reveal"><div class="card-img"><span class="badge">'+p.badge+'</span>'+
+    '<button class="heart" aria-label="Add to favourites" aria-pressed="false">'+heartSVG+'</button>'+
+    '<div class="ph"><img src="'+p.src+'" alt="'+p.alt+'" loading="lazy" onerror="this.remove()">'+p.img+'</div></div>'+
+    '<div class="card-info"><h3>'+p.name+'</h3><p class="meta">'+p.meta+'</p>'+
+    (p.stars ? '<p class="stars">★★★★<span style="opacity:.35">★</span> <span class="meta">'+p.stars+'</span></p>' : '')+
+    price+'<button class="btn sm add"><span>Add to bag</span></button></div></article>';
+}
+var products = [
+  {badge:'Bestseller', name:'Skin Flex Soft Matte Foundation', meta:'50 shades', stars:'4', price:'₦80,200.00', src:'images/product-foundation.jpg', alt:'Skin Flex Soft Matte Foundation bottle', img:'PHOTO — Skin Flex foundation bottle'},
+  {badge:'Exclusive', name:'Bold Stick Lipstick + Lip Liner Duo', meta:'Value ₦75,200', price:'₦67,700.00', src:'images/product-lip-duo.jpg', alt:'Bold Stick lipstick and lip liner duo', img:'PHOTO — Lipstick + liner duo'},
+  {badge:'New Scent', name:'Silk Drop Hydrating Body Milk', meta:'Sweet Bloom · 6 scents', price:'₦60,200.00', src:'images/product-body-milk.jpg', alt:'Silk Drop hydrating body milk bottle', img:'PHOTO — Body milk bottle'},
+  {badge:'New Scent', name:'All-Over Body Mist', meta:'2 sizes · 5 scents', price:'from ₦33,500.00', src:'images/product-body-mist.jpg', alt:'All-Over Body Mist spray bottle', img:'PHOTO — Body mist spray'},
+  {badge:'Bestseller', name:'Glass Glaze Lip Gloss', meta:'20 shades', stars:'4', price:'₦38,500.00', src:'images/product-gloss.jpg', alt:'Glass Glaze lip gloss tube', img:'PHOTO — Glass glaze gloss tube'}
+];
+var gifts = [
+  {badge:'New', name:'12 Days of Velora Advent Calendar', meta:'12 minis · limited edition', price:'₦190,000.00', was:'₦284,000.00', src:'images/gift-advent.jpg', alt:'12 Days of Velora advent calendar box', img:'PHOTO — Advent calendar box'},
+  {badge:'New', name:'Whipped Butter Body Cream with Shea', meta:'Guava Glow · 6 scents', stars:'4', price:'₦46,000.00', src:'images/gift-body-cream.jpg', alt:'Whipped butter body cream jar with shea', img:'PHOTO — Whipped body cream jar'},
+  {badge:'New', name:'Gloss Squad 4-Piece Lip Set', meta:'4-piece set', stars:'4', price:'₦49,000.00', was:'₦84,000.00', src:'images/gift-gloss-set.jpg', alt:'Gloss Squad four-piece lip gloss set', img:'PHOTO — Lip gloss 4-piece set'},
+  {badge:'New', name:'Petite Body Lotion Travel Trio', meta:'3 × 100ml', stars:'4', price:'₦35,000.00', was:'₦54,000.00', src:'images/gift-travel-trio.jpg', alt:'Petite body lotion travel trio', img:'PHOTO — Lotion travel trio'}
+];
+document.getElementById('rail1').innerHTML = products.map(card).join('');
+document.getElementById('rail2').innerHTML = gifts.map(card).join('');
+
+/* rail arrows */
+document.querySelectorAll('.round[data-rail]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var rail = document.getElementById(btn.dataset.rail);
+    rail.scrollBy({left: btn.dataset.dir * rail.clientWidth * 0.85, behavior: reduceMotion ? 'auto' : 'smooth'});
+  });
+});
+function updateArrows(){
+  document.querySelectorAll('.round[data-rail]').forEach(function(btn){
+    var rail = document.getElementById(btn.dataset.rail);
+    var max = rail.scrollWidth - rail.clientWidth - 2;
+    if(btn.dataset.dir == '-1') btn.disabled = rail.scrollLeft <= 2;
+    else btn.disabled = rail.scrollLeft >= max;
+  });
+}
+['rail1','rail2'].forEach(function(id){
+  var r = document.getElementById(id);
+  r.addEventListener('scroll', updateArrows, {passive:true});
+});
+window.addEventListener('resize', updateArrows); updateArrows();
+
+/* hearts + add to bag */
+var bag = 0, bagEl = document.getElementById('bagCount');
+document.addEventListener('click', function(e){
+  var h = e.target.closest('.heart');
+  if(h){
+    var liked = h.classList.toggle('liked');
+    h.setAttribute('aria-pressed', liked ? 'true' : 'false');
+    return;
+  }
+  var a = e.target.closest('.add');
+  if(a && !a.classList.contains('added')){
+    a.classList.add('added'); a.querySelector('span').textContent = 'Added ✓';
+    bag++; bagEl.textContent = bag;
+    bagEl.classList.remove('pop'); void bagEl.offsetWidth; bagEl.classList.add('pop');
+    setTimeout(function(){ a.classList.remove('added'); a.querySelector('span').textContent = 'Add to bag'; }, 1400);
+  }
+});
+
+/* ---------- Newsletter ---------- */
+document.getElementById('newsForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('newsEmail').value = '';
+  document.getElementById('newsOk').style.display = 'block';
+});
+
+/* ---------- Reveals ---------- */
+var io = new IntersectionObserver(function(entries){
+  entries.forEach(function(en){
+    if(en.isIntersecting){
+      en.target.classList.add('in');
+      if(en.target.id === 'banner' || en.target.classList.contains('banner')) en.target.classList.add('in');
+      io.unobserve(en.target);
+    }
+  });
+}, {threshold:.18});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.banner').forEach(function(el){ io.observe(el); });
+
+/* wordmark: letters rise, then wave */
+var wm = document.getElementById('wordmark');
+new IntersectionObserver(function(en, obs){
+  if(en[0].isIntersecting){
+    wm.classList.add('in');
+    setTimeout(function(){ wm.classList.add('wave'); }, reduceMotion ? 0 : 1100);
+    obs.disconnect();
+  }
+}, {threshold:.4}).observe(wm);
+
+/* ---------- Custom cursor ---------- */
+if(window.matchMedia('(pointer:fine)').matches){
+  var cur = document.getElementById('cursor');
+  var cx = -100, cy = -100, tx = cx, ty = cy;
+  document.addEventListener('mousemove', function(e){ tx = e.clientX; ty = e.clientY; });
+  (function loop(){
+    cx += (tx - cx) * .22; cy += (ty - cy) * .22;
+    cur.style.transform = 'translate(' + cx + 'px,' + cy + 'px) translate(-50%,-50%)';
+    requestAnimationFrame(loop);
+  })();
+  document.addEventListener('mouseover', function(e){
+    cur.classList.toggle('big', !!e.target.closest('a,button,.card,.polaroid,.ph,input,label'));
+  });
+}
+
+/* ---------- Click sparkles ---------- */
+document.addEventListener('click', function(e){
+  if(reduceMotion) return;
+  var colors = ['#D8112B','#FF5FA6','#111111'];
+  for(var i=0;i<9;i++){
+    var s = document.createElement('span');
+    s.className = 'spark'; s.textContent = '✦';
+    var ang = (Math.PI*2*i)/9 + Math.random()*.5;
+    var dist = 40 + Math.random()*45;
+    s.style.cssText = 'left:'+e.clientX+'px;top:'+e.clientY+'px;color:'+colors[i%3]+
+      ';--tx:'+(Math.cos(ang)*dist).toFixed(0)+'px;--ty:'+(Math.sin(ang)*dist).toFixed(0)+'px';
+    document.body.appendChild(s);
+    (function(el){ setTimeout(function(){ el.remove(); }, 950); })(s);
+  }
+});
+
+/* ---------- Footer year + brand name in one place ---------- */
+var BRAND = {name:'Velora Beauty', short:'VELORA'};
+document.title = BRAND.name + ' — Beauty for every shade';
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
